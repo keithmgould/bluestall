@@ -7,18 +7,19 @@ get '/' do
   return 'error' unless params['gender'] && params['floor']
   return 'error' unless %w(men women).include?(params['gender'])
 
-  settings.cache.fetch(build_key)
+  @status = settings.cache.fetch(build_key)
+
+  erb :show
 end
 
 put '/' do
-  return 'error' unless params['gender'] && params['floor'] && params['used']
+  return 'error' unless params['gender'] && params['floor'] && params['status']
   return 'error' unless %w(men women).include?(params['gender'])
+  return 'error' unless %w(occupied vacant).include?(params['status'])
 
-  in_use = params['used'] == 'true' ? 'used' : 'empty'
+  settings.cache.write(build_key, params['status'])
 
-  settings.cache.write(build_key, in_use)
-
-  in_use
+  params['status']
 end
 
 private
