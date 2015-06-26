@@ -1,6 +1,9 @@
 require 'sinatra'
 require 'pi_piper'
 
+set :port, 80
+set :environment, :production
+
 include PiPiper
 
 get '/' do
