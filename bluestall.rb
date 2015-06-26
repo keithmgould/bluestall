@@ -8,6 +8,6 @@ include PiPiper
 
 get '/' do
   pin = PiPiper::Pin.new(pin: 7, direction: :in)
-  @status = pin.on? ? 'occupied' : 'vacant'
+  @status = pin.off? ? 'occupied' : 'vacant'
   erb :show
 end
